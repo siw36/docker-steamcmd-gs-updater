@@ -31,7 +31,6 @@ RUN set -x \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
   && rm -rf /tmp/* /var/tmp/*
-  #&& chmod -R 777 $HOME/steamcmd/
 
 USER $USER
 
