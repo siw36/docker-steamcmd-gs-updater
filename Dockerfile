@@ -14,20 +14,21 @@ ENV SERVER $HOME/gameserver
 COPY update.sh $SERVER/update.sh
 
 RUN set -x \
-  echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
 	&& apt-get update \
-	&& apt-get install -y --no-install-recommends --no-install-suggests lib32stdc++6 lib32gcc1 curl ca-certificates \
-	&& mkdir -p $HOME/steamcmd \
-  && curl http://media.steampowered.com/client/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
-  && apt-get -y remove curl \
+	&& apt-get install -y --no-install-recommends --no-install-suggests \
+		lib32stdc++6 \
+		lib32gcc1 \
+		wget \
+		ca-certificates \
+	&& useradd -m steam \
+	&& su steam -c \
+		"mkdir -p $HOME/steamcmd \
+		&& cd $HOME/steamcmd \
+		&& wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -" \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
-  && rm -rf /var/lib/{apt,dpkg,cache,log} \
-  && useradd -m $USER \
-  && chown -R $USER:$USER $HOME \
-  && chmod 777 $SERVER/update.sh \
-  && chmod 777 $HOME/steamcmd/steamcmd.sh \
-  && chmod 777 $HOME/steamcmd/linux32/steamcmd
+  && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
+  && rm -rf /tmp/* /var/tmp/*
 
 USER $USER
 
