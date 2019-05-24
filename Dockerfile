@@ -26,4 +26,6 @@ RUN set -x \
   && chown -R $USER:$USER $HOME \
   && chmod u+x $SERVER/update.sh
 
+USER $USER
+
 ENTRYPOINT $SERVER/update.sh
