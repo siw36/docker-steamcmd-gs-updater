@@ -14,7 +14,7 @@ ENV SERVER $HOME/gameserver
 COPY update.sh $SERVER/update.sh
 
 RUN set -x \
-  && dpkg-reconfigure --frontend=noninteractive \
+  echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests lib32stdc++6 lib32gcc1 wget ca-certificates \
 	&& mkdir -p $HOME/steamcmd \
