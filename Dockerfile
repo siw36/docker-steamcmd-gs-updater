@@ -11,6 +11,8 @@ ENV USER gs
 ENV HOME /home/$USER
 ENV SERVER $HOME/gameserver
 
+USER $USER
+
 COPY update.sh $SERVER/update.sh
 
 RUN set -x \
@@ -28,7 +30,6 @@ RUN set -x \
   && chown -R $USER:$USER $HOME \
   && chmod 777 $SERVER/update.sh
 
-USER $USER
 WORKDIR $HOME
 
 ENTRYPOINT $SERVER/update.sh
