@@ -7,7 +7,7 @@ LABEL maintainer="Robin 'siw36' Klussmann" \
   org.label-schema.vendor="replicas.io" \
   org.label-schema.schema-version="1.0"
 
-ENV USER steam
+ENV USER 1001
 ENV HOME /home/$USER
 ENV SERVER $HOME/gameserver
 
@@ -23,6 +23,7 @@ RUN set -x \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log} \
+  && chown -R $USER:$USER $HOME \
   && chmod u+x $SERVER/update.sh
 
 ENTRYPOINT $SERVER/update.sh
