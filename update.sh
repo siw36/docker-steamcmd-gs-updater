@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ ! -z "$STEAM_APP" ]; then
+if [ -z "$STEAM_APP" ]; then
   echo "STEAM_APP variable is not defined!"
   exit 1
 fi
