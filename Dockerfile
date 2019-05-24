@@ -30,7 +30,7 @@ USER $USER
 
 RUN set -x \
   && cd $HOME/steamcmd \
-  && wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
+  && wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -'
 
 WORKDIR $HOME
 
