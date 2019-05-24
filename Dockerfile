@@ -21,7 +21,7 @@ RUN set -x \
 		lib32gcc1 \
 		wget \
 		ca-certificates \
-	&& useradd -m -u 1000030000 $USER \
+	&& useradd -m -u 1337 $USER \
   && chown -R $USER:$USER $HOME \
 	&& su $USER -c \
 		"mkdir -p $HOME/steamcmd \
