@@ -34,4 +34,5 @@ USER 1337
 
 WORKDIR $HOME
 
-ENTRYPOINT $HOME/update.sh
+#ENTRYPOINT $HOME/update.sh
+ENTRYPOINT sleep infinity
