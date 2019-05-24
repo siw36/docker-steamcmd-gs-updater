@@ -14,6 +14,7 @@ ENV SERVER $HOME/gameserver
 COPY update.sh $SERVER/update.sh
 
 RUN set -x \
+  && dpkg-reconfigure --frontend=noninteractive \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests lib32stdc++6 lib32gcc1 wget ca-certificates \
 	&& mkdir -p $HOME/steamcmd \
@@ -24,8 +25,9 @@ RUN set -x \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log} \
   && chown -R $USER:$USER $HOME \
-  && chmod u+x $SERVER/update.sh
+  && chmod 770 $SERVER/update.sh
 
 USER $USER
+WORKDIR $HOME
 
 ENTRYPOINT $SERVER/update.sh
