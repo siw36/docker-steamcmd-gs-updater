@@ -21,6 +21,7 @@ RUN set -x \
 		wget \
 		ca-certificates \
 	&& useradd -m $USER \
+  && chown -R $USER:$USER $HOME \
 	&& su $USER -c \
 		"mkdir -p $HOME/steamcmd \
 		&& cd $HOME/steamcmd \
