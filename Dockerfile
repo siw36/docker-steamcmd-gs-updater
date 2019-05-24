@@ -12,7 +12,7 @@ ENV HOME /home/$USER
 ENV SERVER $HOME/gameserver
 ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
-COPY update.sh $SERVER/update.sh
+COPY update.sh $HOME/update.sh
 
 RUN set -x \
 	&& apt-get update \
@@ -36,4 +36,4 @@ USER 1337
 
 WORKDIR $HOME
 
-ENTRYPOINT $SERVER/update.sh
+ENTRYPOINT $HOME/update.sh
