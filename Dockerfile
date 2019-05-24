@@ -20,8 +20,8 @@ RUN set -x \
 		lib32gcc1 \
 		wget \
 		ca-certificates \
-	&& useradd -m steam \
-	&& su steam -c \
+	&& useradd -m $USER \
+	&& su $USER -c \
 		"mkdir -p $HOME/steamcmd \
 		&& cd $HOME/steamcmd \
 		&& wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -" \
