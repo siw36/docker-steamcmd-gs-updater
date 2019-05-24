@@ -7,7 +7,7 @@ LABEL maintainer="Robin 'siw36' Klussmann" \
   org.label-schema.vendor="replicas.io" \
   org.label-schema.schema-version="1.0"
 
-ENV USER 1001
+ENV USER steam
 ENV HOME /home/$USER
 ENV SERVER $HOME/gameserver
 
