@@ -18,7 +18,6 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests lib32stdc++6 lib32gcc1 curl ca-certificates \
 	&& mkdir -p $HOME/steamcmd \
-  && apt-get remove -y curl \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log} \
