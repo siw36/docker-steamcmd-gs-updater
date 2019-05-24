@@ -31,4 +31,5 @@ RUN set -x \
 USER $USER
 WORKDIR $HOME
 
-ENTRYPOINT $SERVER/update.sh
+#ENTRYPOINT $SERVER/update.sh
+ENTRYPOINT sleep infinity
