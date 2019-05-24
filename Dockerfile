@@ -30,9 +30,9 @@ RUN set -x \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
   && rm -rf /tmp/* /var/tmp/* \
-  && chown -R $USER:$USER $HOME
+  && chown -R 1337:1337 $HOME
 
-USER $USER
+USER 1337
 
 WORKDIR $HOME
 
