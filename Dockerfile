@@ -19,18 +19,18 @@ RUN set -x \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
 		lib32stdc++6 \
 		lib32gcc1 \
-		wget \
+		curl \
 		ca-certificates \
 	&& useradd -m -u 1337 $USER \
-  && chown -R $USER:$USER $HOME \
-	&& su $USER -c \
-		"mkdir -p $HOME/steamcmd \
-		&& cd $HOME/steamcmd \
-		&& wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -" \
+	&& mkdir -p $HOME/steamcmd \
+  $$ mkdir -p $SERVER \
+	&& curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
+  && apt-get -y remove curl \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && rm -rf /tmp/* /var/tmp/*
+  && rm -rf /tmp/* /var/tmp/* \
+  && chown -R $USER:$USER $HOME
 
 USER $USER
 
