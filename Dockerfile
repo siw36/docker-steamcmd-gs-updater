@@ -18,16 +18,17 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests lib32stdc++6 lib32gcc1 curl ca-certificates \
 	&& mkdir -p $HOME/steamcmd \
+  && curl http://media.steampowered.com/client/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
+  && apt-get -y remove curl \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log} \
   && useradd -m $USER \
   && chown -R $USER:$USER $HOME \
-  && chmod 777 $SERVER/update.sh
+  && chmod 777 $SERVER/update.sh \
+  && chmod 777 $HOME/steamcmd/steamcmd.sh
 
 USER $USER
-
-RUN curl http://media.steampowered.com/client/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz
 
 WORKDIR $HOME
 
