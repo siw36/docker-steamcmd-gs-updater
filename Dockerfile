@@ -26,7 +26,8 @@ RUN set -x \
   && useradd -m $USER \
   && chown -R $USER:$USER $HOME \
   && chmod 777 $SERVER/update.sh \
-  && chmod 777 $HOME/steamcmd/steamcmd.sh
+  && chmod 777 $HOME/steamcmd/steamcmd.sh \
+  && chmod 777 $home/steamcmd/linux32/steamcmd
 
 USER $USER
 
