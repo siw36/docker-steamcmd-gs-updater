@@ -29,8 +29,7 @@ RUN set -x \
 USER $USER
 
 RUN set -x \
-  && cd $HOME/steamcmd \
-  && wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -'
+  curl http://media.steampowered.com/client/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz
 
 WORKDIR $HOME
 
