@@ -29,7 +29,7 @@ RUN set -x \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && rm -rf /tmp/* /var/tmp/* \
+  && rm -rf /tmp/* /var/tmp/*
   #&& chown -R 1337:1337 $HOME
   #&& chmod -R 777 $HOME
 
@@ -38,4 +38,4 @@ USER 1337
 WORKDIR $HOME
 
 #ENTRYPOINT $HOME/update.sh
-ENTRYPOINT echo whoami
+ENTRYPOINT whoami
