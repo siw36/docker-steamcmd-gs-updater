@@ -29,7 +29,8 @@ RUN set -x \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && rm -rf /tmp/* /var/tmp/*
+  && rm -rf /tmp/* /var/tmp/* \
+  && chown -R $USER:$USER $HOME/steamcmd \
 
 USER $USER
 
