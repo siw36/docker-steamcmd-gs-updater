@@ -26,10 +26,9 @@ RUN set -x \
   && rm -rf /var/lib/{apt,dpkg,cache,log} \
   && useradd -m $USER \
   && chown -R $USER:$USER $HOME \
-  && chmod 770 $SERVER/update.sh
+  && chmod 777 $SERVER/update.sh
 
 USER $USER
 WORKDIR $HOME
 
-#ENTRYPOINT $SERVER/update.sh
-ENTRYPOINT sleep infinity
+ENTRYPOINT $SERVER/update.sh
