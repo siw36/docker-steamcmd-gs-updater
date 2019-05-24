@@ -7,8 +7,7 @@ LABEL maintainer="Robin 'siw36' Klussmann" \
   org.label-schema.vendor="replicas.io" \
   org.label-schema.schema-version="1.0"
 
-ENV USER gs
-ENV HOME /home/$USER
+ENV HOME /home/gs
 ENV SERVER $HOME/gameserver
 ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
@@ -21,7 +20,6 @@ RUN set -x \
 		lib32gcc1 \
 		curl \
 		ca-certificates \
-	&& useradd -m -u 1337 $USER \
 	&& mkdir -p $HOME/steamcmd \
   $$ mkdir -p $SERVER \
 	&& curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
@@ -29,13 +27,11 @@ RUN set -x \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && rm -rf /tmp/* /var/tmp/*
-  #&& chown -R 1337:1337 $HOME
-  #&& chmod -R 777 $HOME
+  && rm -rf /tmp/* /var/tmp/* \
+  && chmod -R 777 $HOME
 
 USER 1337
 
 WORKDIR $HOME
 
-#ENTRYPOINT $HOME/update.sh
-ENTRYPOINT whoami
+ENTRYPOINT $HOME/update.sh
