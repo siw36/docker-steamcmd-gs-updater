@@ -11,8 +11,6 @@ ENV USER gs
 ENV HOME /home/$USER
 ENV SERVER $HOME/gameserver
 
-USER $USER
-
 COPY update.sh $SERVER/update.sh
 
 RUN set -x \
@@ -20,8 +18,6 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests lib32stdc++6 lib32gcc1 wget ca-certificates \
 	&& mkdir -p $HOME/steamcmd \
-	&& cd $HOME/steamcmd \
-	&& wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf - \
   && apt-get remove -y wget \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
@@ -29,6 +25,12 @@ RUN set -x \
   && useradd -m $USER \
   && chown -R $USER:$USER $HOME \
   && chmod 777 $SERVER/update.sh
+
+USER $USER
+
+RUN set -x \
+  && cd $HOME/steamcmd \
+  && wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
 
 WORKDIR $HOME
 
