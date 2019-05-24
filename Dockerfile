@@ -10,6 +10,7 @@ LABEL maintainer="Robin 'siw36' Klussmann" \
 ENV USER gs
 ENV HOME /home/$USER
 ENV SERVER $HOME/gameserver
+ENV LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
 COPY update.sh $SERVER/update.sh
 
@@ -20,7 +21,7 @@ RUN set -x \
 		lib32gcc1 \
 		wget \
 		ca-certificates \
-	&& useradd -m $USER \
+	&& useradd -m -u 1000030000 $USER \
   && chown -R $USER:$USER $HOME \
 	&& su $USER -c \
 		"mkdir -p $HOME/steamcmd \
@@ -30,7 +31,7 @@ RUN set -x \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
   && rm -rf /tmp/* /var/tmp/* \
-  && chmod -R 777 $HOME/steamcmd/
+  #&& chmod -R 777 $HOME/steamcmd/
 
 USER $USER
 
