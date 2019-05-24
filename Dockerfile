@@ -7,7 +7,7 @@ LABEL maintainer="Robin 'siw36' Klussmann" \
   org.label-schema.vendor="replicas.io" \
   org.label-schema.schema-version="1.0"
 
-ENV USER 1001
+ENV USER gs
 ENV HOME /home/$USER
 ENV SERVER $HOME/gameserver
 
@@ -24,7 +24,7 @@ RUN set -x \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log} \
-  && useradd $USER \
+  && useradd -m $USER \
   && chown -R $USER:$USER $HOME \
   && chmod 770 $SERVER/update.sh
 
