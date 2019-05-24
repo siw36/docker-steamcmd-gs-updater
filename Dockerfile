@@ -28,8 +28,7 @@ RUN set -x \
 
 USER $USER
 
-RUN set -x \
-  && curl http://media.steampowered.com/client/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz
+RUN curl http://media.steampowered.com/client/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz
 
 WORKDIR $HOME
 
