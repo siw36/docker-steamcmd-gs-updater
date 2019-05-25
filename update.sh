@@ -7,7 +7,7 @@ fi
 
 if [ $PURGE ]; then
   echo "Deleting game files from PVC"
-  rm -rf $SERVER
+  rm -rf $SERVER/*
 fi
 
 cd $HOME/steamcmd
