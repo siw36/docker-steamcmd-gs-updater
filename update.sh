@@ -5,7 +5,7 @@ if [ -z "$STEAM_APP" ]; then
   exit 1
 fi
 
-if [ $PURGE == true ]; then
+if [ $PURGE ]; then
   echo "Deleting game files from PVC"
   rm -rf $SERVER
 fi
