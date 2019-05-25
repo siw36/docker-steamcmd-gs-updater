@@ -5,6 +5,11 @@ if [ -z "$STEAM_APP" ]; then
   exit 1
 fi
 
+if [ $PURGE == true ]; then
+  echo "Deleting game files from PVC"
+  rm -rf $SERVER
+fi
+
 cd $HOME/steamcmd
 ./steamcmd.sh +login anonymous +force_install_dir $SERVER +app_update $STEAM_APP validate +quit \
 rm -rf /tmp/*
