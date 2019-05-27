@@ -28,9 +28,8 @@ RUN set -x \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
   && rm -rf /tmp/* /var/tmp/* \
-  && chmod -R 777 $HOME
-
-USER 1337
+  && chgrp -R 0 $HOME \
+  && chmod -R g=u $HOME
 
 WORKDIR $HOME
 
