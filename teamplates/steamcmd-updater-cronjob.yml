@@ -1,0 +1,46 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: steamcmd-gs-updater-csgo
+  namespace: test
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            cronjob: steamcmd-gs-updater-csgo
+          name: steamcmd-gs-updater-csgo
+        spec:
+          containers:
+          - env:
+            - name: STEAM_APP
+              value: "740"
+            - name: PURGE
+              value: "no"
+            image: docker-registry.default.svc:5000/test/docker-steamcmd-gs-updater:latest
+            imagePullPolicy: Always
+            name: steamcmd-gs-updater-csgo
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+            volumeMounts:
+            - mountPath: /home/gs/gameserver
+              name: game-data
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: game-data
+            persistentVolumeClaim:
+              claimName: steamcmd-gs-updater-csgo
+  schedule: 0 4 * * *
+  successfulJobsHistoryLimit: 3
+  suspend: false
