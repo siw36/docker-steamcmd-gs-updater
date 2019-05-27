@@ -27,8 +27,9 @@ RUN set -x \
   && apt-get clean autoclean \
   && apt-get autoremove -y \
   && rm -rf /var/lib/{apt,dpkg,cache,log}/ \
-  && rm -rf /tmp/* /var/tmp/* \
-  && chgrp -R 0 $HOME \
+  && rm -rf /tmp/* /var/tmp/*
+
+RUN chgrp -R 0 $HOME \
   && chmod -R g=u $HOME
 
 WORKDIR $HOME
