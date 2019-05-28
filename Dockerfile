@@ -12,8 +12,8 @@ LABEL maintainer="Robin 'siw36' Klussmann" \
   io.openshift.tags="steamcmd" \
   version=0.1
 
-ENV HOME /home/gs \
-  SERVER /home/gs/gameserver \
+ENV HOME=/home/gs \
+  SERVER=/home/gs/gameserver \
   LC_ALL=en_US.UTF-8 \
   LANG=en_US.UTF-8 \
   LANGUAGE=en_US.UTF-8 \
