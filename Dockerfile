@@ -27,9 +27,8 @@ RUN yum -y fs documentation && \
   gzip \
   curl \
   ca-certificates \
-  nss-softokn-freebl.i686 \
   glibc.i686 \
-  libstdc++.i686 \
+  libgcc.i686 \
   && yum -y update && yum -y clean all
 
 COPY update.sh $HOME/update.sh
