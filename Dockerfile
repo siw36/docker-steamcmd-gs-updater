@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi7/ubi-minimal:7.6
+FROM centos:latest
 LABEL maintainer="Robin 'siw36' Klussmann" \
   author="Robin 'siw36' Klussmann" \
   org.label-schema.name="steamcmd-gs-updater-image-replicas" \
@@ -21,7 +21,8 @@ ENV HOME=/home/gs \
   GS_GID=1337 \
   GS_UID=1337
 
-RUN microdnf --nodocs install \
+RUN yum -y fs documentation && \
+  yum -y install \
   tar \
   gzip \
   curl \
@@ -29,7 +30,7 @@ RUN microdnf --nodocs install \
   nss-softokn-freebl.i686 \
   glibc.i686 \
   libstdc++.i686 \
-  && microdnf update && microdnf clean all
+  && yum -y update && yum -y clean all
 
 COPY update.sh $HOME/update.sh
 
@@ -37,8 +38,8 @@ RUN mkdir -p $HOME/steamcmd $SERVER \
 	&& curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
   && groupadd -r -g $GS_GID gs \
   && useradd -rMl -u $GS_UID -d $HOME -g gs gs \
-  && microdnf remove curl gzip tar \
-  && microdnf clean all \
+  && yum -y remove curl gzip tar \
+  && yum -y clean all \
   && rm -rf /tmp/* /var/tmp/* /var/cache/{dnf,microdnf}
 
 RUN chown -R gs:gs $HOME \
