@@ -37,7 +37,7 @@ RUN mkdir -p $HOME/steamcmd $SERVER \
 	&& curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
   && groupadd -r -g $GS_GID gs \
   && useradd -rMl -u $GS_UID -d $HOME -g gs gs \
-  && yum -y remove curl gzip tar \
+  && rpm -e --nodeps curl gzip tar \
   && yum -y clean all \
   && rm -rf /tmp/* /var/tmp/* /var/cache/{dnf,microdnf}
 
