@@ -39,7 +39,7 @@ RUN mkdir -p $HOME/steamcmd $SERVER \
   && useradd -rMl -u $GS_UID -d $HOME -g gs gs \
   && rpm -e --nodeps curl gzip tar \
   && yum -y clean all \
-  && rm -rf /tmp/* /var/tmp/* /var/cache/{dnf,microdnf}
+  && rm -rf /tmp/* /var/tmp/* /var/cache/{yum,rpm}
 
 RUN chown -R gs:gs $HOME \
   && chmod -R 777 $HOME
