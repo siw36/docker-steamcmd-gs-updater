@@ -22,8 +22,7 @@ ENV HOME=/home/gs \
   GS_UID=1337
 
 RUN yum -y fs documentation \
-  && yum -y remove glibc.x86_64 libgcc.x86_64 \
-  && yum -y install \
+  && yum -y --setopt=protected_multilib=false install \
     tar \
     gzip \
     curl \
