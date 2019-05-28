@@ -21,14 +21,15 @@ ENV HOME=/home/gs \
   GS_GID=1337 \
   GS_UID=1337
 
-RUN yum -y fs documentation && \
-  yum -y install \
-  tar \
-  gzip \
-  curl \
-  ca-certificates \
-  glibc.i686 \
-  libgcc.i686 \
+RUN yum -y fs documentation \
+  && yum -y remove glibc.x86_64 libgcc.x86_64 \
+  && yum -y install \
+    tar \
+    gzip \
+    curl \
+    ca-certificates \
+    glibc.i686 \
+    libgcc.i686 \
   && yum -y update && yum -y clean all
 
 COPY update.sh $HOME/update.sh
