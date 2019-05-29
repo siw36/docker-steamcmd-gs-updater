@@ -41,10 +41,10 @@ RUN mkdir -p $HOME/steamcmd $SERVER \
   && yum -y clean all \
   && rm -rf /tmp/* /var/tmp/* /var/cache/{yum,rpm}
 
-RUN chown -R gs:gs $HOME \
-  && chmod -R 777 $HOME
+RUN chown -R $GS_UID:$GS_GID $HOME \
+  && chmod -R 775 $HOME
 
-USER gs
+USER $GS_UID
 
 WORKDIR $HOME
 
