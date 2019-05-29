@@ -1,51 +1,51 @@
 FROM centos:latest
-LABEL maintainer="Robin 'siw36' Klussmann" \
-  author="Robin 'siw36' Klussmann" \
-  org.label-schema.name="steamcmd-gs-updater-image-replicas" \
-  org.label-schema.description="Steam CMD game server updater Docker image" \
-  org.label-schema.url="https://github.com/siw36/docker-csgo" \
-  org.label-schema.vcs-url="https://github.com/siw36/docker-csgo" \
-  org.label-schema.vendor="replicas.io" \
-  org.label-schema.schema-version="0.1" \
-  io.k8s.description="SteamCMD game server updater" \
-  io.k8s.display-name="SteamCMD Updater" \
-  io.openshift.tags="steamcmd" \
-  version=0.1
+
+LABEL name="siw36/steamcmd-gs-updater" \
+  maintainer="https://github.com/siw36" \
+  vendor="ReplicasIO" \
+  version="1" \
+  release="1" \
+  summary="SteamCMD game server updater" \
+  description="This image will install/update a chosen steam APP. See README.md for details." \
+  url="https://www.replicas.io" \
+  io.k8s.description="This image will install/update a chosen steam APP. See README.md for details." \
+  io.k8s.display-name="SteamCMD-GS-Updater" \
+  io.openshift.expose-services="" \
+  io.openshift.tags="replicas.io,gs,gameserver,steamcmd"
 
 ENV HOME=/home/gs \
   SERVER=/home/gs/gameserver \
   LC_ALL=en_US.UTF-8 \
   LANG=en_US.UTF-8 \
   LANGUAGE=en_US.UTF-8 \
-  TZ=Europe/Berlin \
-  GS_GID=1337 \
-  GS_UID=1337
+  TZ=Europe/Berlin
 
-RUN yum -y fs documentation \
-  && yum -y --setopt=protected_multilib=false install \
+RUN yum -y update-minimal --setopt=tsflags=nodocs \
+  && yum -y --setopt=protected_multilib=false --setopt=tsflags=nodocs install \
     tar \
     gzip \
     curl \
     ca-certificates \
     glibc.i686 \
     libgcc.i686 \
-  && yum -y update && yum -y clean all
-
-COPY update.sh $HOME/update.sh
+  && yum -y clean all
 
 RUN mkdir -p $HOME/steamcmd $SERVER \
 	&& curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
-  && groupadd -r -g $GS_GID gs \
-  && useradd -rMl -u $GS_UID -d $HOME -g gs gs \
   && rpm -e --nodeps curl gzip tar \
   && yum -y clean all \
   && rm -rf /tmp/* /var/tmp/* /var/cache/{yum,rpm}
 
-RUN chown -R $GS_UID:$GS_GID $HOME \
+COPY update.sh $HOME/update.sh
+
+RUN chgrp -R 0 $HOME \
+  && chmod -R g=u $HOME \
   && chmod -R 775 $HOME
 
-USER $GS_UID
+USER 1337
 
 WORKDIR $HOME
 
-ENTRYPOINT $HOME/update.sh
+ENTRYPOINT [ "$HOME/update.sh" ]
+
+CMD run
