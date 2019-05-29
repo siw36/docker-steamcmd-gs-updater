@@ -11,7 +11,8 @@ LABEL name="siw36/steamcmd-gs-updater" \
   io.k8s.description="This image will install/update a chosen steam APP. See README.md for details." \
   io.k8s.display-name="SteamCMD-GS-Updater" \
   io.openshift.expose-services="" \
-  io.openshift.tags="replicas.io,gs,gameserver,steamcmd"
+  io.openshift.tags="replicas.io,gs,gameserver,steamcmd" \
+  io.openshift.non-scalable="true"
 
 ENV HOME=/home/gs \
   SERVER=/home/gs/gameserver \
