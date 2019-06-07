@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM ubuntu:18.04
 
 LABEL name="siw36/steamcmd-gs-updater" \
   maintainer="https://github.com/siw36" \
@@ -21,21 +21,28 @@ ENV HOME=/home/gs \
   LANGUAGE=en_US.UTF-8 \
   TZ=Europe/Berlin
 
-RUN yum -y update-minimal --setopt=tsflags=nodocs \
-  && yum -y --setopt=protected_multilib=false --setopt=tsflags=nodocs install \
-    tar \
-    gzip \
+RUN apt-get -y update \
+  && apt-get -y upgrade \
+  && apt-get -y --no-install-recommends --no-install-suggests install \
     curl \
+    net-tools \
     ca-certificates \
-    glibc.i686 \
-    libgcc.i686 \
-  && yum -y clean all
-
-RUN mkdir -p $HOME/steamcmd $SERVER \
-	&& curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
-  && rpm -e --nodeps curl gzip tar \
-  && yum -y clean all \
-  && rm -rf /tmp/* /var/tmp/* /var/cache/{yum,rpm}
+    gzip \
+    tar \
+    lib32gcc1 \
+    lib32stdc++6 \
+    gdb \
+    locales \
+  && locale-gen $LC_ALL \
+  && update-locale LANG=$LANG LANGUAGE=$LANGUAGE LC_ALL=$LC_ALL \
+  && dpkg-reconfigure --frontend=noninteractive locales \
+  && update-ca-certificates \
+  && mkdir -p $HOME/steamcmd $SERVER \
+  && curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
+  && apt-get purge -y curl \
+  && apt-get clean autoclean \
+  && apt-get autoremove -y \
+  && rm -rf /var/lib/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
 
 COPY update.sh $HOME/update.sh
 
