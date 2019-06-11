@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM debian:stretch-slim
 
 LABEL name="siw36/steamcmd-gs-updater" \
   maintainer="https://github.com/siw36" \
@@ -19,23 +19,28 @@ ENV HOME=/home/gs \
   LC_ALL=en_US.UTF-8 \
   LANG=en_US.UTF-8 \
   LANGUAGE=en_US.UTF-8 \
-  TZ=Europe/Berlin
+  TZ=Europe/Berlin \
+  DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get -y update \
+RUN dpkg --add-architecture i386 \
+  && apt-get -y update \
   && apt-get -y upgrade \
   && apt-get -y --no-install-recommends --no-install-suggests install \
     curl \
-    net-tools \
-    ca-certificates \
-    gzip \
-    tar \
-    lib32gcc1 \
-    lib32stdc++6 \
-    gdb \
+    dnsutils \
     locales \
-  && locale-gen $LC_ALL \
-  && update-locale LANG=$LANG LANGUAGE=$LANGUAGE LC_ALL=$LC_ALL \
+    net-tools \
+    locales \
+    ca-certificates \
+    gdb \
+    libc6-i386 \
+    lib32stdc++6 \
+    lib32gcc1 \
+    lib32ncurses5 \
+    lib32z1 \
+  && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
   && dpkg-reconfigure --frontend=noninteractive locales \
+  && update-locale LANG=en_US.UTF-8 \
   && update-ca-certificates \
   && mkdir -p $HOME/steamcmd $SERVER \
   && curl https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz | tar -C $HOME/steamcmd -xvz \
